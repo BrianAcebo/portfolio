@@ -6,7 +6,7 @@ const SearchContext = createContext<SearchContextType>({
 	setSearch: () => {},
 	searchResults: [],
 	setSearchResults: () => {},
-	handleSearch: (query: string) => Promise.resolve()
+	handleSearch: () => Promise.resolve()
 });
 
 export default SearchContext;

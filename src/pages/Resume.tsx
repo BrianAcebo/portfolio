@@ -32,7 +32,7 @@ export default function Resume() {
 				{TECHNOLOGIES.map((tech) => (
 					<li key={tech.name} className="flex items-center gap-3">
 						<span className="w-1/2 sm:w-auto sm:min-w-35">{tech.name}</span>
-						<div className="h-1.5 w-1/2 max-w-32 min-w-20 flex-1 overflow-hidden rounded-full bg-gray-600 sm:w-auto sm:w-full">
+						<div className="h-1.5 w-1/2 max-w-32 min-w-20 flex-1 overflow-hidden rounded-full bg-gray-600 sm:w-auto">
 							<div
 								className="bg-brand h-full rounded-full transition-[width] duration-500"
 								style={{ width: `${tech.level}%` }}

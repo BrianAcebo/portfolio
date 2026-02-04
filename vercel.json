@@ -1,5 +1,15 @@
 {
 	"version": 2,
 	"buildCommand": "npm run build",
-	"framework": null
+	"outputDirectory": "dist",
+	"framework": null,
+	"functions": {
+		"api/index.py": {
+			"runtime": "python3.12"
+		}
+	},
+	"rewrites": [
+		{ "source": "/api", "destination": "/api/index" },
+		{ "source": "/api/(.*)", "destination": "/api/index?path=$1" }
+	]
 }

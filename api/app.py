@@ -1,4 +1,9 @@
 import os
+import sys
+
+# Ensure imports work in Vercel serverless environment
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from data import portfolio_projects, notifications, categories, blog_posts, profiles
@@ -31,8 +36,71 @@ def health():
 
 
 @app.get("/api")
-def root():
+def root(path: str | None = None, query: str | None = None):
+    # Vercel rewrites /api/* to /api?path=...; dispatch so API routes work with static outputDirectory
+    if path is not None and path != "":
+        return _dispatch(path, query)
     return {"message": "Portfolio API", "docs": "/docs"}
+
+
+def _dispatch(path: str, search_query: str | None) -> any:
+    parts = path.strip("/").split("/")
+    if path == "health":
+        return {"status": "ok"}
+    if path == "projects":
+        return portfolio_projects
+    if path == "profiles":
+        return profiles
+    if path == "notifications":
+        return notifications
+    if path == "posts":
+        return blog_posts
+    if path == "categories":
+        categories_with_projects = []
+        for c in categories:
+            c_copy = dict(c)
+            c_copy["projects"] = [p for p in portfolio_projects if p["category_id"] == c["id"]]
+            categories_with_projects.append(c_copy)
+        return categories_with_projects
+    if path == "search":
+        q = (search_query or "").strip().lower()
+        if not q:
+            return []
+        return [
+            p for p in portfolio_projects
+            if q in p["title"].lower()
+            or _matches_query(q, p.get("tags", []))
+            or q in p["project_type"].lower()
+            or _matches_query(q, p.get("tech_stack", []))
+        ]
+    if len(parts) >= 2:
+        key, rest = parts[0], "/".join(parts[1:])
+        if key == "project":
+            try:
+                pid = int(rest)
+                p = next((x for x in portfolio_projects if x["id"] == pid), None)
+                return p
+            except ValueError:
+                pass
+        if key == "category":
+            try:
+                cid = int(rest)
+                c = next((x for x in categories if x["id"] == cid), None)
+                return c
+            except ValueError:
+                pass
+        if key == "profile":
+            try:
+                pid = int(rest)
+                p = next((x for x in profiles if x["id"] == pid), None)
+                return p
+            except ValueError:
+                pass
+        if key == "post":
+            post = next((p for p in blog_posts if p["slug"] == rest), None)
+            return post
+    from fastapi.responses import JSONResponse
+    return JSONResponse(content={"detail": "Not Found"}, status_code=404)
 
 def _matches_query(q: str, value) -> bool:
     q = q.lower()

@@ -50,34 +50,27 @@ export default function NotificationsPanel() {
 							<Loader2 className="size-6 animate-spin" />
 						</div>
 					) : notifications.length > 0 ? (
-						notifications.map((notification) => {
-							const url =
-								notification.source_type === 'blog_post'
-									? `/blog/${notification.source_slug}`
-									: `/projects/${notification.source_id}`;
-							return (
-								<a
-									href={url}
-									onClick={() => removeNotification(notification.id)}
-									key={notification.id}
-									className="flex items-start gap-2"
-								>
-									<img
-										src={notification.source_image}
-										alt={notification.source_type}
-										className="h-20 w-2/5 object-cover object-center"
-									/>
-									<div className="w-3/5 text-left">
-										<h2 className="text-sm font-medium text-gray-300">{notification.title}</h2>
-										<p className="text-xs text-gray-500">
-											{formatDistanceToNow(new Date(notification.createdAt), {
-												addSuffix: true
-											})}
-										</p>
-									</div>
-								</a>
-							);
-						})
+						notifications.map((notification) => (
+							<button
+								onClick={() => removeNotification(notification.id)}
+								key={notification.id}
+								className="flex items-start gap-2"
+							>
+								<img
+									src={notification.source_image}
+									alt={notification.source_type}
+									className="h-20 w-2/5 object-cover object-center"
+								/>
+								<div className="w-3/5 text-left">
+									<h2 className="text-sm font-medium text-gray-300">{notification.title}</h2>
+									<p className="text-xs text-gray-500">
+										{formatDistanceToNow(new Date(notification.createdAt), {
+											addSuffix: true
+										})}
+									</p>
+								</div>
+							</button>
+						))
 					) : (
 						<div className="flex size-full items-center justify-center">
 							<p className="font-bold text-white">No Notifications</p>

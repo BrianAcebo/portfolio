@@ -12,7 +12,7 @@ fi
 
 # Dev: --reload; Start (preview): no reload
 if [ "$1" = "start" ]; then
-    exec uvicorn main:app --host 0.0.0.0 --port 3000
+    exec uvicorn app:app --host 0.0.0.0 --port 3000
 else
-    exec uvicorn main:app --reload --port 3000
+    exec uvicorn app:app --reload --port 3000
 fi

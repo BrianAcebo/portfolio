@@ -25,7 +25,7 @@ export default function Home() {
 							className="absolute inset-0 z-0 h-full w-full object-cover object-center"
 						/>
 						<div className="absolute inset-0 z-0 block h-full w-full bg-linear-to-t from-black via-black/50 to-transparent md:hidden"></div>
-						<div className="animate-fade-in-up max-w-laptop mx-auto -mt-20 w-full px-5 opacity-0 md:-mt-10">
+						<div className="animate-fade-in-up max-w-laptop mx-auto -mt-20 w-full px-5 opacity-0 md:-mt-10 md:px-8 xl:px-12">
 							<span className="text-brand mb-2 block text-xl font-bold tracking-wider uppercase sm:text-2xl md:text-3xl">
 								Featured
 							</span>
@@ -70,9 +70,11 @@ export default function Home() {
 				</>
 			)}
 
-			<div className="max-w-laptop relative z-50 mx-auto -mt-30 px-5">
+			<div className="max-w-laptop relative z-50 mx-auto -mt-30 px-5 md:px-8 xl:px-12">
 				{categoriesLoading ? (
-					<div>Loading...</div>
+					<div className="animate-fade-in flex min-h-[40vh] items-center justify-center opacity-0">
+						<div className="border-brand h-12 w-12 animate-spin rounded-full border-2 border-t-transparent" />
+					</div>
 				) : (
 					<div className="space-y-10 sm:space-y-20">
 						{categories.map((category) => (

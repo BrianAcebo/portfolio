@@ -7,6 +7,7 @@ import { ArrowLeft, Clock, User } from 'lucide-react';
 import { useMemo } from 'react';
 import { useBlog } from '../hooks/useBlog';
 import BlogGrid from '../components/blog/BlogGrid';
+import NotFound from '../components/error/NotFound';
 
 export default function BlogPost() {
 	const { slug } = useParams<{ slug: string }>();
@@ -33,15 +34,7 @@ export default function BlogPost() {
 	}
 
 	if (!post) {
-		return (
-			<div className="mx-auto max-w-3xl px-6 py-24 text-center">
-				<h1 className="text-2xl font-bold text-white">Post not found</h1>
-				<Link to="/blog" className="text-brand mt-4 inline-flex items-center gap-2 hover:underline">
-					<ArrowLeft className="h-4 w-4" />
-					Back to blog
-				</Link>
-			</div>
-		);
+		return <NotFound />;
 	}
 
 	return (
@@ -56,7 +49,7 @@ export default function BlogPost() {
 						className="absolute inset-0 h-full w-full object-cover opacity-90"
 					/>
 					<div className="from-bg via-bg/80 absolute inset-0 bg-linear-to-t to-transparent" />
-					<div className="max-w-laptop inset-0 mx-auto mt-auto mb-0 flex w-full flex-col justify-end p-5 md:p-10">
+					<div className="max-w-laptop inset-0 mx-auto mt-auto mb-0 flex w-full flex-col justify-end p-5 md:px-8 md:py-10 xl:px-12">
 						<Link
 							to="/blog"
 							className="hover:text-brand animate-fade-in-up mb-6 inline-flex w-fit items-center gap-2 text-sm text-white/80 opacity-0 transition"

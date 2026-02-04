@@ -39,7 +39,7 @@ export default function Search() {
 	return (
 		<>
 			<PageMeta title="Search" description={query ? `Search results for "${query}"` : 'Search'} />
-			<div className="mx-7 mt-30 sm:mx-auto">
+			<div className="max-w-laptop mx-auto mt-30 px-5 sm:mx-auto md:px-8 xl:px-12">
 				{query && tags.length > 0 && (
 					<div className="mb-6 flex flex-col items-start gap-2 sm:flex-row">
 						<p className="text-gray-400">More to explore:</p>

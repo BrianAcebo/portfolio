@@ -78,7 +78,7 @@ export default function AppHeader() {
 		<>
 			<header
 				ref={headerRef}
-				className="fixed top-0 z-100 w-full bg-transparent py-3 pr-5 pl-2 transition-all duration-300 sm:gap-4 2xl:pl-5"
+				className="fixed top-0 z-100 w-full bg-transparent px-5 py-3 transition-all duration-300 sm:gap-4 md:px-8 xl:px-12"
 			>
 				<div className="max-w-laptop mx-auto flex w-full items-center justify-between gap-2">
 					<div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden sm:gap-6 md:gap-10">

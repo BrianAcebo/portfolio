@@ -50,7 +50,7 @@ export default function Resume() {
 				title="Resume"
 				description="Brian Acebo — Senior Product Engineer. Resume and work experience."
 			/>
-			<div className="mx-auto mt-30 max-w-4xl px-6 pb-16 md:px-10">
+			<div className="mx-auto mt-30 max-w-4xl px-5 pb-16 md:px-8 xl:px-12">
 				{/* Hero + Download */}
 				<header className="animate-fade-in-up mb-12 flex flex-col gap-6 opacity-0 sm:flex-row sm:items-center sm:justify-between">
 					<div>

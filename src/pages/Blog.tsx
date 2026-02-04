@@ -8,7 +8,7 @@ export default function Blog() {
 	return (
 		<>
 			<PageMeta title="Blog" description="Thoughts on AI, frontend, and building products." />
-			<div className="max-w-laptop mx-auto mt-30 px-5">
+			<div className="max-w-laptop mx-auto mt-30 px-5 md:px-8 xl:px-12">
 				{/* Hero */}
 				<header className="animate-fade-in-up mb-16 opacity-0">
 					<h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">

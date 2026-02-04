@@ -10,11 +10,10 @@ import {
 	ArrowUpRightFromSquare
 } from 'lucide-react';
 import type { Project } from '../../types/projects';
-import { FADE_DURATION_MS } from '../../constants';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useProjects } from '../../hooks/useProjects';
 import { useCallback, useRef } from 'react';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from '../ui/Image';
 
 interface ProjectViewerModalProps {
@@ -37,22 +36,25 @@ export function ProjectViewerModal({
 
 	useFocusTrap(containerRef, open, { onEscape: handleClose });
 
+	// TODO: Fix weird safari twitch with framer motion animation
+
 	return (
 		<AnimatePresence>
 			{open && (
 				<motion.div
 					ref={containerRef}
-					className="scrollbar-branded fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto overscroll-contain bg-black/80 backdrop-blur-sm transition-opacity duration-200"
+					className="scrollbar-branded fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto overscroll-contain bg-black/90 backdrop-blur-sm"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
-					transition={{ duration: FADE_DURATION_MS / 1000 }}
+					transition={{ duration: 0.2 }}
+					onClick={handleClose}
 					role="dialog"
 					aria-modal="true"
 					aria-label={project ? `Project: ${project.title}` : 'Project details'}
 				>
 					<div
-						className="relative my-10 w-full max-w-4xl shrink-0 rounded-lg bg-zinc-900 shadow-2xl transition-opacity duration-200"
+						className="relative my-10 w-full max-w-4xl shrink-0 rounded-lg bg-zinc-900 shadow-2xl"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{/* Close button */}
@@ -75,7 +77,6 @@ export function ProjectViewerModal({
 										width={1280}
 										height={400}
 										className="absolute inset-0 h-full w-full object-cover"
-										fetchPriority="high"
 										decoding="async"
 									/>
 									<div className="absolute inset-0 bg-linear-to-t from-zinc-900 via-zinc-900/60 to-transparent" />

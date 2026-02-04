@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+.env
+.env.*
+__pycache__
+*.pyc
+.vscode
+.cursor
+fly.toml

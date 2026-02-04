@@ -78,9 +78,9 @@ export default function AppHeader() {
 		<>
 			<header
 				ref={headerRef}
-				className="fixed top-0 z-100 w-full bg-transparent px-5 py-3 transition-all duration-300 sm:gap-4 md:px-8 xl:px-12"
+				className="fixed top-0 z-100 w-full bg-transparent transition-all duration-300"
 			>
-				<div className="max-w-laptop mx-auto flex w-full items-center justify-between gap-2">
+				<div className="max-w-laptop mx-auto flex w-full items-center justify-between gap-2 py-3 pr-5 pl-3 sm:gap-4 md:px-8 xl:px-12">
 					<div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden sm:gap-6 md:gap-10">
 						<button
 							type="button"

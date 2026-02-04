@@ -25,12 +25,12 @@ export default function Home() {
 							className="absolute inset-0 z-0 h-full w-full object-cover object-center"
 						/>
 						<div className="absolute inset-0 z-0 block h-full w-full bg-linear-to-t from-black via-black/50 to-transparent md:hidden"></div>
-						<div className="animate-fade-in-up max-w-laptop mx-auto -mt-20 w-full px-5 opacity-0 md:-mt-10 md:px-8 xl:px-12">
+						<div className="animate-fade-in-up max-w-laptop mx-auto -mt-15 w-full px-5 opacity-0 md:-mt-5 md:px-8 xl:px-12">
 							<span className="text-brand mb-2 block text-xl font-bold tracking-wider uppercase sm:text-2xl md:text-3xl">
 								Featured
 							</span>
 							<div className="space-y-4">
-								<h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-8xl">
+								<h1 className="-ml-1 text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
 									{featuredProject?.title}
 								</h1>
 								<div className="flex items-center gap-3">

@@ -937,6 +937,261 @@ Build the API you'd want to use yourself.""",
         "featured": False,
         "category_id": 1,
     },
+    {
+        "id": 8,
+        "slug": "building-accessible-web-apps-that-dont-suck",
+        "title": "Building Accessible Web Apps That Don't Suck",
+        "excerpt": "Accessibility isn't charity work—it's good engineering. Here's how to build inclusive interfaces without sacrificing design or developer experience.",
+        "body": """## Accessibility Is Engineering, Not Charity
+
+Let's get one thing out of the way: accessibility (a11y) isn't about checking boxes for compliance. It's about building products that work for everyone—including the 15% of the global population with some form of disability.
+
+And here's the kicker: accessible code is usually *better* code. Semantic HTML, keyboard navigation, and clear focus states benefit everyone, not just users with disabilities.
+
+---
+
+## The Foundation: Semantic HTML
+
+Before reaching for ARIA, use the right HTML elements. They come with accessibility baked in.
+
+```html
+<!-- Bad: div soup with ARIA bolted on -->
+<div role="button" tabindex="0" onclick="submit()">Submit</div>
+
+<!-- Good: native button, accessible by default -->
+<button type="submit">Submit</button>
+```
+
+**Native elements give you:**
+- Keyboard support (Enter/Space to activate)
+- Focus management
+- Screen reader announcements
+- Form submission behavior
+
+**Use the right element:**
+- `<button>` for actions
+- `<a>` for navigation
+- `<input>`, `<select>`, `<textarea>` for form fields
+- `<nav>`, `<main>`, `<header>`, `<footer>` for landmarks
+- `<h1>`–`<h6>` for headings (in order!)
+
+ARIA is for *enhancing* semantics when native HTML isn't enough—not for replacing it.
+
+---
+
+## Keyboard Navigation
+
+Not everyone uses a mouse. Power users, people with motor impairments, and screen reader users all rely on keyboards.
+
+**The basics:**
+- Every interactive element must be focusable (`<button>`, `<a>`, `<input>`, or `tabindex="0"`)
+- Focus order should follow visual order (don't break it with CSS)
+- Custom widgets need arrow key navigation (tabs, menus, carousels)
+
+**Focus trapping in modals:**
+
+When a modal opens, focus should move inside it. Tab should cycle within the modal, not escape to the page behind. When it closes, focus should return to the element that opened it.
+
+```tsx
+// Simplified focus trap logic
+const focusable = modal.querySelectorAll('button, [href], input, [tabindex]');
+const first = focusable[0];
+const last = focusable[focusable.length - 1];
+
+modal.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+  if (e.key === 'Escape') closeModal();
+});
+```
+
+---
+
+## Images and Alt Text
+
+Every `<img>` needs an `alt` attribute. But what goes in it depends on context.
+
+**Informative images:** Describe the content.
+```html
+<img src="chart.png" alt="Sales increased 40% in Q4 2024" />
+```
+
+**Decorative images:** Use empty alt so screen readers skip them.
+```html
+<img src="decorative-swirl.svg" alt="" />
+```
+
+**Functional images (icons in buttons):** Describe the action.
+```html
+<button aria-label="Close modal">
+  <svg><!-- X icon --></svg>
+</button>
+```
+
+**Don't start with "Image of..." or "Picture of..."** Screen readers already announce it's an image.
+
+---
+
+## Color and Contrast
+
+Color alone should never convey meaning. A red border on an invalid input doesn't help colorblind users.
+
+**Always pair color with text, icons, or patterns:**
+```html
+<!-- Bad: only color indicates error -->
+<input class="border-red-500" />
+
+<!-- Good: color + icon + text -->
+<input class="border-red-500" aria-describedby="error-msg" />
+<p id="error-msg" class="text-red-500">
+  <span aria-hidden="true">⚠</span> Email is required
+</p>
+```
+
+**Contrast ratios (WCAG AA):**
+- Normal text: at least 4.5:1
+- Large text (18px+ bold or 24px+): at least 3:1
+- UI components and graphics: at least 3:1
+
+Use tools like WebAIM's contrast checker or browser DevTools to verify.
+
+---
+
+## Forms Done Right
+
+Forms are where accessibility often breaks down. Here's how to do them well.
+
+**Always use labels:**
+```html
+<!-- Bad: placeholder is not a label -->
+<input placeholder="Email" />
+
+<!-- Good: visible label associated with input -->
+<label for="email">Email</label>
+<input id="email" type="email" />
+```
+
+**Group related fields:**
+```html
+<fieldset>
+  <legend>Shipping Address</legend>
+  <!-- address fields -->
+</fieldset>
+```
+
+**Announce errors clearly:**
+```html
+<input id="email" aria-invalid="true" aria-describedby="email-error" />
+<p id="email-error" role="alert">Please enter a valid email address</p>
+```
+
+**Use `autocomplete`** for common fields so browsers and password managers can help:
+```html
+<input type="email" autocomplete="email" />
+<input type="password" autocomplete="current-password" />
+```
+
+---
+
+## ARIA: Use Sparingly, Use Correctly
+
+ARIA (Accessible Rich Internet Applications) extends HTML semantics for complex widgets. But misused ARIA is worse than no ARIA.
+
+**The first rule of ARIA:** Don't use ARIA if native HTML works.
+
+**Common patterns:**
+
+*Live regions* for dynamic content:
+```html
+<div aria-live="polite">3 items in cart</div>
+```
+
+*Labeling icons:*
+```html
+<button aria-label="Search">
+  <SearchIcon aria-hidden="true" />
+</button>
+```
+
+*Hiding decorative content:*
+```html
+<span aria-hidden="true">•</span>
+```
+
+*Describing relationships:*
+```html
+<input aria-describedby="password-hint" />
+<p id="password-hint">Must be at least 8 characters</p>
+```
+
+---
+
+## Testing for Accessibility
+
+You can't ship accessible code without testing it. Here's a practical workflow:
+
+**1. Automated scans**
+- Lighthouse accessibility audit
+- axe DevTools browser extension
+- eslint-plugin-jsx-a11y for React
+
+These catch ~30% of issues: missing alt text, bad contrast, missing labels.
+
+**2. Keyboard testing**
+- Tab through the entire page
+- Can you reach every interactive element?
+- Can you activate buttons/links with Enter/Space?
+- Can you escape modals?
+
+**3. Screen reader testing**
+- VoiceOver (Mac): Cmd + F5
+- NVDA (Windows): Free download
+- Test forms, navigation, dynamic content
+
+**4. Zoom testing**
+- Zoom to 200%. Does the layout still work?
+- Is text readable? Are touch targets big enough?
+
+---
+
+## Quick Wins Checklist
+
+- [ ] All images have appropriate `alt` text
+- [ ] All form inputs have associated `<label>`s
+- [ ] Color is never the only way to convey information
+- [ ] Contrast ratios meet WCAG AA (4.5:1 for text)
+- [ ] All interactive elements are keyboard accessible
+- [ ] Focus states are visible (don't remove outlines!)
+- [ ] Modals trap focus and close with Escape
+- [ ] Page has a logical heading hierarchy (h1 → h2 → h3)
+- [ ] Skip link exists for keyboard users to bypass nav
+- [ ] Dynamic content uses `aria-live` or focus management
+
+---
+
+## The Takeaway
+
+Accessibility isn't an afterthought or a nice-to-have. It's a core part of building quality software.
+
+The good news: most accessibility work is just good engineering—semantic HTML, keyboard support, clear visual hierarchy. Start with the basics, test with real tools, and iterate.
+
+Build products that work for everyone. It's the right thing to do, and it makes your code better.""",
+        "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2532&auto=format&fit=crop",
+        "author": "Brian Acebo",
+        "author_avatar": "",
+        "published_at": "2024-07-18T11:00:00Z",
+        "reading_time_minutes": 11,
+        "tags": ["Accessibility", "A11y", "HTML", "ARIA", "UX", "Frontend"],
+        "featured": False,
+        "category_id": 5,
+    },
 ]
 
 notifications = [

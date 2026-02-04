@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import SearchContext from '../contexts/SearchContext';
 import { api } from '../utils/api';
 import type { Project } from '../types/projects';
@@ -20,11 +20,10 @@ export default function SearchProvider({ children }: { children: React.ReactNode
 		}
 	}, []);
 
-	return (
-		<SearchContext.Provider
-			value={{ search, setSearch, searchResults, setSearchResults, handleSearch }}
-		>
-			{children}
-		</SearchContext.Provider>
+	const value = useMemo(
+		() => ({ search, setSearch, searchResults, setSearchResults, handleSearch }),
+		[search, searchResults, handleSearch]
 	);
+
+	return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;
 }

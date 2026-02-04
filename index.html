@@ -1,53 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description"
-          content="I'm a software engineer that specializes in building awesome digital experiences." />
-    <meta name="keywords"
-          content="software engineer, software developer, web engineer, frontend engineer, frontend developer, web developer" />
-    <!-- Favicon & Webclip -->
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="/images/webclip.jpg" />
-    <!-- SEO | OG -->
-    <meta content="I'm a software engineer that specializes in building awesome digital experiences." />
-    <meta content="Brian Acebo | Software Engineer" property="og:title" />
-    <meta content="I'm a software engineer that specializes in building awesome digital experiences."
-          property="og:description" />
-    <meta content="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          property="og:image" />
-    <meta property="og:type" content="website" />
-    <!-- SEO | Twitter -->
-    <meta content="Brian Acebo | Software Engineer" property="twitter:title" />
-    <meta content="I'm a software engineer that specializes in building awesome digital experiences."
-          property="twitter:description" />
-    <meta content="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          property="twitter:image" />
-    <meta content="summary_large_image" name="twitter:card" />
-    <!-- Fonts -->
-    <link rel="preload"
-          href="/fonts/Netflix-Sans-Bold.otf"
-          as="font"
-          type="font/otf">
-    <link rel="preload"
-          href="/fonts/Netflix-Sans-Medium.otf"
-          as="font"
-          type="font/otf">
-    <link rel="preload"
-          href="/fonts/Netflix-Sans-Light.otf"
-          as="font"
-          type="font/otf">
-    <style>
-      body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-    </style>
-    <title>Brian Acebo | Software Engineer</title>
-  </head>
-  <body class="dark:bg-gray-900">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+      <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <!-- Performance: preconnect to external image origin (blog: Resource Hints) -->
+            <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+            <link rel="dns-prefetch" href="https://images.unsplash.com" />
+            <meta name="description"
+                  content="I'm a software engineer that specializes in building awesome digital experiences." />
+            <meta name="keywords"
+                  content="software engineer, software developer, web engineer, frontend engineer, frontend developer, web developer" />
+            <!-- Favicon & Webclip -->
+            <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+            <link rel="apple-touch-icon" href="/images/webclip.jpg" />
+            <!-- SEO | OG -->
+            <meta content="I'm a software engineer that specializes in building awesome digital experiences." />
+            <meta content="Brian Acebo | Software Engineer" property="og:title" />
+            <meta content="I'm a software engineer that specializes in building awesome digital experiences."
+                  property="og:description" />
+            <meta content="/images/og-image.jpg" property="og:image" />
+            <meta property="og:type" content="website" />
+            <!-- SEO | Twitter -->
+            <meta content="Brian Acebo | Software Engineer" property="twitter:title" />
+            <meta content="I'm a software engineer that specializes in building awesome digital experiences."
+                  property="twitter:description" />
+            <meta content="/images/og-image.jpg" property="twitter:image" />
+            <meta content="summary_large_image" name="twitter:card" />
+            <!-- Fonts: preload must match @font-face URLs; crossorigin required for preload to be used -->
+            <!-- Helvetica Neue (OTF/TTF) -->
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueThin.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueThinItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueUltraLight.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueUltraLightItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueLight.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueLightItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueRoman.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueItalic.ttf"
+                  as="font"
+                  type="font/ttf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueMedium.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueMediumItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueBold.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueBoldItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueHeavy.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueHeavyItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueBlack.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <link rel="preload"
+                  href="/fonts/HelveticaNeueBlackItalic.otf"
+                  as="font"
+                  type="font/otf"
+                  crossorigin="anonymous">
+            <style>
+                  body {
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
+                  }
+            </style>
+            <title>Brian Acebo | Software Engineer</title>
+      </head>
+      <body class="dark:bg-gray-900">
+            <div id="root"></div>
+            <script type="module" src="/src/main.tsx"></script>
+      </body>
 </html>

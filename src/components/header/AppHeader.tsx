@@ -8,7 +8,7 @@ import ProfilesPanel from '../profiles/ProfilesPanel';
 import { Menu, X } from 'lucide-react';
 
 export default function AppHeader() {
-	const headerRef = useRef<HTMLDivElement>(null);
+	const headerRef = useRef<HTMLElement>(null);
 	const { pathname } = useLocation();
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -85,7 +85,7 @@ export default function AppHeader() {
 						<button
 							type="button"
 							onClick={() => setMobileMenuOpen((o) => !o)}
-							className="flex shrink-0 items-center justify-center p-2 text-white hover:text-gray-300 md:hidden"
+							className="flex shrink-0 items-center justify-center p-2 text-white hover:text-gray-300 xl:hidden"
 							aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
 							aria-expanded={mobileMenuOpen}
 						>
@@ -97,7 +97,12 @@ export default function AppHeader() {
 								{LINKS.map((link) => (
 									<li key={link.href}>
 										{link.fake ? (
-											<span className={cn('cursor-pointer', linkClass(link.href))}>
+											<span
+												className={cn('cursor-pointer', linkClass(link.href))}
+												role="link"
+												aria-disabled="true"
+												aria-label={`${link.label} (coming soon)`}
+											>
 												{link.label}
 											</span>
 										) : (
@@ -112,7 +117,7 @@ export default function AppHeader() {
 					</div>
 					<div className="flex min-w-0 shrink-0 items-center gap-4 md:gap-6">
 						<div className="hidden md:block">
-							<SearchBar />
+							<SearchBar isMobile={false} />
 						</div>
 						<NotificationsPanel />
 						<ProfilesPanel />
@@ -123,7 +128,7 @@ export default function AppHeader() {
 			{/* Mobile / tablet menu overlay */}
 			<div
 				className={cn(
-					'fixed inset-0 z-90 bg-black/80 transition-opacity duration-300 md:hidden',
+					'fixed inset-0 z-90 bg-black/80 transition-opacity duration-300 xl:hidden',
 					mobileMenuOpen ? 'visible opacity-100' : 'pointer-events-none invisible opacity-0'
 				)}
 				onClick={() => setMobileMenuOpen(false)}
@@ -131,21 +136,28 @@ export default function AppHeader() {
 			/>
 			<aside
 				className={cn(
-					'fixed top-0 left-0 z-95 h-full w-72 max-w-[85vw] bg-black shadow-xl transition-transform duration-300 ease-out md:hidden',
+					'fixed top-0 left-0 z-95 h-full w-72 max-w-[85vw] bg-black shadow-xl transition-transform duration-300 ease-out xl:hidden',
 					mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
 				)}
 				aria-label="Main navigation"
 			>
 				<div className="flex h-full flex-col px-6 pt-[calc(var(--header-height,80px)+1rem)] pb-8">
-					<div className="mb-6 md:hidden">
-						<SearchBar />
+					<div className="mb-6 xl:hidden">
+						<SearchBar isMobile={true} />
 					</div>
 					<nav>
 						<ul className="flex flex-col gap-3">
 							{LINKS.map((link) => (
 								<li key={link.href}>
 									{link.fake ? (
-										<span className={cn('cursor-pointer', linkClass(link.href))}>{link.label}</span>
+										<span
+											className={cn('cursor-pointer', linkClass(link.href))}
+											role="link"
+											aria-disabled="true"
+											aria-label={`${link.label} (coming soon)`}
+										>
+											{link.label}
+										</span>
 									) : (
 										<Link to={link.href} className={linkClass(link.href)}>
 											{link.label}

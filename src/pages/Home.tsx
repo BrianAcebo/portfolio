@@ -5,6 +5,7 @@ import { Lightbox } from '../components/common/Lightbox';
 import { VideoWithCustomControls } from '../components/common/VideoWithCustomControls';
 import ProjectsGrid from '../components/projects/ProjectsGrid';
 import { useCategories } from '../hooks/useCategories';
+import Image from '../components/ui/Image';
 
 export default function Home() {
 	const { featuredProject, featuredProjectLoading } = useProjects();
@@ -15,14 +16,23 @@ export default function Home() {
 	return (
 		<div>
 			{featuredProjectLoading ? (
-				<div className="relative h-[90vh] w-full animate-pulse bg-gray-700"></div>
-			) : (
+				<div
+					className="relative h-[90vh] w-full animate-pulse bg-gray-700"
+					aria-busy="true"
+					aria-live="polite"
+				/>
+			) : featuredProject ? (
 				<>
 					<div className="relative flex h-[90vh] w-full items-center justify-center">
-						<img
-							src={featuredProject?.image}
-							alt={featuredProject?.title}
+						<Image
+							src={featuredProject.image}
+							alt={featuredProject.title}
+							width={1920}
+							height={1080}
 							className="absolute inset-0 z-0 h-full w-full object-cover object-center"
+							loading="eager"
+							fetchPriority="high"
+							decoding="async"
 						/>
 						<div className="absolute inset-0 z-0 block h-full w-full bg-linear-to-t from-black via-black/50 to-transparent md:hidden"></div>
 						<div className="animate-fade-in-up max-w-laptop mx-auto -mt-15 w-full px-5 opacity-0 md:-mt-5 md:px-8 xl:px-12">
@@ -31,7 +41,7 @@ export default function Home() {
 							</span>
 							<div className="space-y-4">
 								<h1 className="-ml-1 text-4xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl">
-									{featuredProject?.title}
+									{featuredProject.title}
 								</h1>
 								<div className="flex items-center gap-3">
 									<div className="bg-brand w-10 rounded-sm p-1 text-center">
@@ -40,21 +50,23 @@ export default function Home() {
 									<p className="text-base font-bold text-white sm:text-xl">#1 in Projects Today</p>
 								</div>
 								<p className="max-w-lg text-sm text-white sm:text-base">
-									{featuredProject?.overview}
+									{featuredProject.overview}
 								</p>
 								<div className="flex items-center gap-3">
 									<button
 										type="button"
 										onClick={() => setIsLightboxOpen(true)}
 										className="inline-flex items-center gap-2 rounded-sm bg-gray-100 px-4 py-2 text-black"
+										aria-label="Play intro video"
 									>
 										<Play className="size-4 fill-current" />
 										<span className="text-sm font-bold sm:text-base">Play</span>
 									</button>
 									<button
-										onClick={() => setSelectedProject(featuredProject)}
 										type="button"
+										onClick={() => setSelectedProject(featuredProject)}
 										className="inline-flex items-center gap-2 rounded-sm bg-gray-600 px-4 py-2 text-white"
+										aria-label="More info about featured project"
 									>
 										<Info className="size-5" />
 										<span className="text-sm font-bold sm:text-base">More Info</span>
@@ -65,9 +77,11 @@ export default function Home() {
 								<span className="text-base text-white sm:text-lg">TV-MA</span>
 							</div>
 						</div>
-						<div className="from-bg via-bg/50 absolute bottom-0 z-40 h-20 w-full bg-linear-to-t to-transparent"></div>
+						<div className="from-bg via-bg/50 absolute bottom-0 z-40 h-20 w-full bg-linear-to-t to-transparent" />
 					</div>
 				</>
+			) : (
+				<div className="relative h-[90vh] w-full bg-gray-900" aria-label="No featured project" />
 			)}
 
 			<div className="max-w-laptop relative z-50 mx-auto -mt-30 px-5 md:px-8 xl:px-12">

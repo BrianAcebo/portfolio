@@ -4,15 +4,27 @@ export default function GridShape() {
 			<div className="absolute top-0 right-0 -z-1 w-full max-w-[250px] xl:max-w-[450px]">
 				<img
 					src="/images/shape/grid-01.svg"
-					alt="grid"
+					alt=""
+					width={450}
+					height={450}
+					className="h-auto w-full"
+					loading="lazy"
+					decoding="async"
+					aria-hidden
 				/>
 			</div>
 			<div className="absolute bottom-0 left-0 -z-1 w-full max-w-[250px] rotate-180 xl:max-w-[450px]">
 				<img
 					src="/images/shape/grid-01.svg"
-					alt="grid"
+					alt=""
+					width={450}
+					height={450}
+					className="h-auto w-full"
+					loading="lazy"
+					decoding="async"
+					aria-hidden
 				/>
 			</div>
 		</>
-	)
+	);
 }

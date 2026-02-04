@@ -19,7 +19,11 @@ export default function About() {
 						<img
 							src="/images/general/profile-2.png"
 							alt="Brian Acebo"
+							width={160}
+							height={200}
 							className="h-auto w-32 sm:w-40"
+							loading="lazy"
+							decoding="async"
 						/>
 					</div>
 				</header>

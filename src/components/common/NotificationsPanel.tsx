@@ -59,7 +59,11 @@ export default function NotificationsPanel() {
 								<img
 									src={notification.source_image}
 									alt={notification.source_type}
+									width={80}
+									height={80}
 									className="h-20 w-2/5 object-cover object-center"
+									loading="lazy"
+									decoding="async"
 								/>
 								<div className="w-3/5 text-left">
 									<h2 className="text-sm font-medium text-gray-300">{notification.title}</h2>

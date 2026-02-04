@@ -41,7 +41,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 				<img
 					src={project.image}
 					alt={project.title}
+					width={400}
+					height={400}
 					className="absolute inset-0 h-full w-full object-cover"
+					loading="lazy"
+					decoding="async"
 				/>
 
 				{/* Dark gradient at bottom for title readability */}

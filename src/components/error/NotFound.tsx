@@ -14,8 +14,22 @@ export default function NotFound() {
 				<div className="mx-auto w-full max-w-[242px] text-center sm:max-w-[472px]">
 					<h1 className="text-title-md xl:text-title-2xl text-muted mb-8 font-bold">ERROR</h1>
 
-					<img src="/images/error/404.svg" alt="404" className="dark:hidden" />
-					<img src="/images/error/404-dark.svg" alt="404" className="hidden dark:block" />
+					<img
+						src="/images/error/404.svg"
+						alt="404"
+						width={200}
+						height={200}
+						className="dark:hidden"
+						decoding="async"
+					/>
+					<img
+						src="/images/error/404-dark.svg"
+						alt="404"
+						width={200}
+						height={200}
+						className="hidden dark:block"
+						decoding="async"
+					/>
 
 					<p className="text-muted mt-10 mb-6 text-base sm:text-lg">
 						We can't seem to find the page you are looking for!

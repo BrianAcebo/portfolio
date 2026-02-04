@@ -215,6 +215,8 @@ export function VideoWithCustomControls({
 						}}
 					/>
 					<input
+						id="video-seek"
+						name="video-seek"
 						type="range"
 						min={0}
 						max={duration > 0 ? duration : 100}
@@ -267,6 +269,8 @@ export function VideoWithCustomControls({
 									}}
 								/>
 								<input
+									id="video-volume"
+									name="video-volume"
 									type="range"
 									min={0}
 									max={1}

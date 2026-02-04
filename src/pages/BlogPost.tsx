@@ -8,26 +8,21 @@ import { useMemo } from 'react';
 import { useBlog } from '../hooks/useBlog';
 import BlogGrid from '../components/blog/BlogGrid';
 import NotFound from '../components/error/NotFound';
+import Image from '../components/ui/Image';
 
 export default function BlogPost() {
 	const { slug } = useParams<{ slug: string }>();
 	const { post, loading } = useBlogPost(slug);
 	const { posts } = useBlog();
 
-	// TODO: Handle this in the backend
 	const relatedPosts = useMemo(() => {
-		return posts
-			.filter(
-				(p) =>
-					(p.id !== post?.id && p.tags.some((t) => post?.tags.includes(t))) ||
-					p.category_id === post?.category_id
-			)
-			.slice(0, 3);
-	}, [posts, post]);
+		if (!post) return [];
+		return posts.filter((p) => p.id !== post.id).slice(0, 3);
+	}, [post, posts]);
 
 	if (loading) {
 		return (
-			<div className="flex min-h-screen items-center justify-center">
+			<div className="flex min-h-[50vh] items-center justify-center">
 				<div className="border-brand h-12 w-12 animate-spin rounded-full border-2 border-t-transparent" />
 			</div>
 		);
@@ -43,10 +38,14 @@ export default function BlogPost() {
 			<article className="min-h-screen">
 				{/* Hero */}
 				<header className="relative flex h-[50vh] min-h-[320px] items-end justify-start overflow-hidden">
-					<img
+					<Image
 						src={post.image}
-						alt=""
+						alt={post.title}
+						width={1280}
+						height={400}
 						className="absolute inset-0 h-full w-full object-cover opacity-90"
+						decoding="async"
+						fetchPriority="high"
 					/>
 					<div className="from-bg via-bg/80 absolute inset-0 bg-linear-to-t to-transparent" />
 					<div className="max-w-laptop inset-0 mx-auto mt-auto mb-0 flex w-full flex-col justify-end p-5 md:px-8 md:py-10 xl:px-12">
@@ -96,7 +95,11 @@ export default function BlogPost() {
 							<img
 								src={post.author_avatar}
 								alt={post.author}
+								width={56}
+								height={56}
 								className="h-14 w-14 rounded-full object-cover ring-2 ring-white/20"
+								loading="lazy"
+								decoding="async"
 							/>
 						)}
 						<div>
@@ -105,23 +108,15 @@ export default function BlogPost() {
 						</div>
 					</div>
 
-					<Link
-						to="/blog"
-						className="text-brand animate-fade-in-up animate-stagger-7 mt-10 inline-flex items-center gap-2 opacity-0 transition hover:underline"
-					>
-						<ArrowLeft className="h-4 w-4" />
-						Back to all posts
-					</Link>
+					{/* Related posts */}
+					{relatedPosts.length > 0 && (
+						<section className="animate-fade-in-up animate-stagger-7 mt-16 opacity-0">
+							<h2 className="text-muted mb-5 text-3xl font-bold">Related posts</h2>
+							<BlogGrid posts={relatedPosts} />
+						</section>
+					)}
 				</div>
 			</article>
-
-			{/* Related posts */}
-			{relatedPosts.length > 0 && (
-				<div className="mx-auto max-w-3xl px-6 py-12 md:px-10">
-					<h2 className="text-muted mb-5 text-3xl font-bold">Related posts</h2>
-					<BlogGrid posts={relatedPosts} />
-				</div>
-			)}
 		</>
 	);
 }

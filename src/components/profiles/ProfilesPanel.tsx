@@ -34,8 +34,12 @@ export default function ProfilesPanel() {
 			>
 				<img
 					src={user?.avatar}
-					alt={user?.name}
+					alt={user?.name ?? 'Profile'}
+					width={28}
+					height={28}
 					className="size-6 object-cover object-center sm:size-7"
+					loading="lazy"
+					decoding="async"
 				/>
 			</button>
 			<div
@@ -65,7 +69,11 @@ export default function ProfilesPanel() {
 												<img
 													src={profile.avatar}
 													alt={profile.name}
+													width={32}
+													height={32}
 													className="size-6 object-cover object-center sm:size-8"
+													loading="lazy"
+													decoding="async"
 												/>
 											</div>
 											<div className="w-fit text-left">

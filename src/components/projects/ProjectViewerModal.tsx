@@ -13,7 +13,9 @@ import type { Project } from '../../types/projects';
 import { FADE_DURATION_MS } from '../../constants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useProjects } from '../../hooks/useProjects';
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
+import Image from '../ui/Image';
 
 interface ProjectViewerModalProps {
 	open: boolean;
@@ -27,12 +29,19 @@ export function ProjectViewerModal({
 	relatedProjects = []
 }: ProjectViewerModalProps) {
 	const { setSelectedProject } = useProjects();
-	const handleClose = useCallback(() => setSelectedProject(null), [setSelectedProject]);
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	const handleClose = useCallback(() => {
+		setSelectedProject(null);
+	}, [setSelectedProject]);
+
+	useFocusTrap(containerRef, open, { onEscape: handleClose });
 
 	return (
 		<AnimatePresence>
 			{open && (
 				<motion.div
+					ref={containerRef}
 					className="scrollbar-branded fixed inset-0 z-1000 flex items-start justify-center overflow-y-auto overscroll-contain bg-black/80 backdrop-blur-sm transition-opacity duration-200"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
@@ -51,7 +60,7 @@ export function ProjectViewerModal({
 							type="button"
 							onClick={handleClose}
 							className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
-							aria-label="Close"
+							aria-label="Close project details"
 						>
 							<X className="h-5 w-5" />
 						</button>
@@ -60,10 +69,14 @@ export function ProjectViewerModal({
 							<>
 								{/* Hero */}
 								<div className="relative h-80 overflow-hidden rounded-t-lg sm:h-100">
-									<img
+									<Image
 										src={project.image}
 										alt={project.title}
+										width={1280}
+										height={400}
 										className="absolute inset-0 h-full w-full object-cover"
+										fetchPriority="high"
+										decoding="async"
 									/>
 									<div className="absolute inset-0 bg-linear-to-t from-zinc-900 via-zinc-900/60 to-transparent" />
 									<div className="absolute right-0 bottom-0 left-0 p-6">
@@ -162,7 +175,7 @@ export function ProjectViewerModal({
 										</section>
 									)}
 
-									{/* Key features (filler) */}
+									{/* Key features */}
 									{project.key_features?.length > 0 && (
 										<section className="mb-8">
 											<h2 className="mb-2 text-lg font-semibold">Key features</h2>
@@ -174,7 +187,7 @@ export function ProjectViewerModal({
 										</section>
 									)}
 
-									{/* Links (filler) */}
+									{/* Links */}
 									<section className="mb-8">
 										<h2 className="mb-2 text-lg font-semibold">Links</h2>
 										<div className="flex flex-wrap gap-3">
@@ -220,8 +233,12 @@ export function ProjectViewerModal({
 														>
 															<img
 																src={p.image}
-																alt=""
+																alt={p.title}
+																width={320}
+																height={180}
 																className="aspect-video w-full object-cover"
+																loading="lazy"
+																decoding="async"
 															/>
 															<p className="truncate p-2 text-sm font-medium text-white">
 																{p.title}
@@ -232,7 +249,7 @@ export function ProjectViewerModal({
 										</section>
 									)}
 
-									{/* About (filler) */}
+									{/* About */}
 									<section>
 										<h2 className="mb-2 text-lg font-semibold">About Brian</h2>
 										<p className="text-sm leading-relaxed text-gray-300">

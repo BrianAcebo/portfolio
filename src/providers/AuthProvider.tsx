@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { api } from '../utils/api';
 import type { Profile } from '../types/profiles';
@@ -31,24 +31,25 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 		fetchProfile();
 	}, []);
 
-	const signOut = () => {
+	const signOut = useCallback(() => {
 		localStorage.removeItem('currentProfileId');
 		setUser(null);
-	};
+	}, []);
 
-	const signIn = (profile: Profile) => {
+	const signIn = useCallback((profile: Profile) => {
 		localStorage.setItem('currentProfileId', profile.id.toString());
 		setUser(profile);
-	};
+	}, []);
 
-	const changeProfile = (profile: Profile) => {
+	const changeProfile = useCallback((profile: Profile) => {
 		localStorage.setItem('currentProfileId', profile.id.toString());
 		setUser(profile);
-	};
+	}, []);
 
-	return (
-		<AuthContext.Provider value={{ user, authReady, setUser, signOut, signIn, changeProfile }}>
-			{children}
-		</AuthContext.Provider>
+	const value = useMemo(
+		() => ({ user, authReady, setUser, signOut, signIn, changeProfile }),
+		[user, authReady, signOut, signIn, changeProfile]
 	);
+
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

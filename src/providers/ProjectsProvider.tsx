@@ -55,19 +55,26 @@ export default function ProjectsProvider({ children }: { children: React.ReactNo
 		fetchFeaturedProject();
 	}, [projects]);
 
-	return (
-		<ProjectsContext.Provider
-			value={{
-				projects,
-				projectsLoading,
-				featuredProject,
-				featuredProjectLoading,
-				selectedProject,
-				setSelectedProject,
-				relatedProjects
-			}}
-		>
-			{children}
-		</ProjectsContext.Provider>
+	const value = useMemo(
+		() => ({
+			projects,
+			projectsLoading,
+			featuredProject,
+			featuredProjectLoading,
+			selectedProject,
+			setSelectedProject,
+			relatedProjects
+		}),
+		[
+			projects,
+			projectsLoading,
+			featuredProject,
+			featuredProjectLoading,
+			selectedProject,
+			setSelectedProject,
+			relatedProjects
+		]
 	);
+
+	return <ProjectsContext.Provider value={value}>{children}</ProjectsContext.Provider>;
 }

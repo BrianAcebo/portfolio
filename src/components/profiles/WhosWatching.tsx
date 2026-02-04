@@ -32,7 +32,11 @@ export default function WhosWatching() {
 								<img
 									src={profile.avatar}
 									alt={profile.name}
+									width={160}
+									height={160}
 									className="mb-2 size-30 object-cover object-center sm:size-40"
+									loading="lazy"
+									decoding="async"
 								/>
 								<span className="text-muted text-sm font-medium sm:text-base">{profile.name}</span>
 							</button>

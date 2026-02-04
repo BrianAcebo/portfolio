@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useDebounce } from '../../hooks/useDebounce';
 import { DEBOUNCE_MS } from '../../constants';
 
-export default function SearchInput() {
+export default function SearchInput({ isMobile = false }: { isMobile?: boolean }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [initialLoad, setInitialLoad] = useState(true);
 
@@ -100,12 +100,15 @@ export default function SearchInput() {
 				<SearchIcon className="size-6" />
 			</button>
 			<input
+				id={isMobile ? 'mobile-header-search' : 'header-search'}
+				name={isMobile ? 'mobile-header-search' : 'header-search'}
 				className={`${cn('text-sm font-medium text-white transition-all duration-300 outline-none focus:outline-none', isOpen ? 'visible w-full' : 'invisible w-0')}`}
 				ref={inputRef}
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
-				type="text"
+				type="search"
 				placeholder="Title, people, genres"
+				autoComplete="off"
 			/>
 			<button
 				type="button"

@@ -24,8 +24,12 @@ export default function BlogCard({ post, index }: BlogCardProps) {
 			<div className="relative aspect-16/10 overflow-hidden">
 				<img
 					src={post.image}
-					alt=""
+					alt={post.title}
+					width={640}
+					height={400}
 					className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+					loading="lazy"
+					decoding="async"
 				/>
 				<div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-80 transition-opacity group-hover:opacity-90" />
 				<div className="absolute right-0 bottom-0 left-0 p-4">

@@ -1,15 +1,26 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router';
 import ScrollToTop from './components/common/ScrollToTop';
 import { Toaster } from 'sonner';
 import AppLayout from './layouts/AppLayout';
 import NotFound from './components/error/NotFound';
-import Home from './pages/Home';
-import Search from './pages/Search';
-import Blog from './pages/Blog';
-import BlogPost from './pages/BlogPost';
-import About from './pages/About';
-import Resume from './pages/Resume';
+import { Loader2 } from 'lucide-react';
 import './index.css';
+
+// Lazy load pages for code splitting - reduces initial bundle size
+const Home = lazy(() => import('./pages/Home'));
+const Search = lazy(() => import('./pages/Search'));
+const Blog = lazy(() => import('./pages/Blog'));
+const BlogPost = lazy(() => import('./pages/BlogPost'));
+const About = lazy(() => import('./pages/About'));
+const Resume = lazy(() => import('./pages/Resume'));
+
+// Minimal loading fallback
+const PageLoader = () => (
+	<div className="flex min-h-[50vh] items-center justify-center">
+		<Loader2 className="size-6 animate-spin text-white" />
+	</div>
+);
 
 function App() {
 	return (
@@ -19,12 +30,55 @@ function App() {
 				<ScrollToTop />
 				<Routes>
 					<Route element={<AppLayout />}>
-						<Route index path="/" element={<Home />} />
-						<Route path="/search" element={<Search />} />
-						<Route path="/blog" element={<Blog />} />
-						<Route path="/blog/:slug" element={<BlogPost />} />
-						<Route path="/about" element={<About />} />
-						<Route path="/resume" element={<Resume />} />
+						<Route
+							index
+							path="/"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<Home />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="/search"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<Search />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="/blog"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<Blog />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="/blog/:slug"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<BlogPost />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="/about"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<About />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="/resume"
+							element={
+								<Suspense fallback={<PageLoader />}>
+									<Resume />
+								</Suspense>
+							}
+						/>
 					</Route>
 
 					{/* Fallback Route */}

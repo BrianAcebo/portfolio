@@ -7,10 +7,39 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, Response
+from starlette.middleware.base import BaseHTTPMiddleware
 from data import portfolio_projects, notifications, categories, blog_posts, profiles
 
 app = FastAPI(title="Portfolio API", version="0.1.0")
+
+
+# Security headers middleware
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response: Response = await call_next(request)
+        # HSTS - enforce HTTPS
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        # Prevent clickjacking
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        # Cross-Origin-Opener-Policy
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        # Content-Security-Policy (permissive for SPA, tighten as needed)
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: https:; "
+            "font-src 'self'; "
+            "connect-src 'self' https:; "
+            "frame-ancestors 'self';"
+        )
+        # Prevent MIME type sniffing
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        return response
+
+
+app.add_middleware(SecurityHeadersMiddleware)
 
 # CORS for development (in production, same origin so not needed)
 app.add_middleware(
@@ -120,26 +149,52 @@ if os.path.exists(DIST_DIR):
     # Serve static assets (js, css, images, etc.)
     app.mount("/assets", StaticFiles(directory=os.path.join(DIST_DIR, "assets")), name="assets")
     
-    # Serve files from dist root (favicon, etc.)
+    # Serve files from dist root (favicon, starwars.js, etc.)
     @app.get("/favicon.ico")
     async def favicon():
         return FileResponse(os.path.join(DIST_DIR, "favicon.ico"))
     
+    @app.get("/robots.txt")
+    async def robots():
+        return FileResponse(os.path.join(DIST_DIR, "robots.txt"), media_type="text/plain")
+    
+    @app.get("/sitemap.xml")
+    async def sitemap():
+        return FileResponse(os.path.join(DIST_DIR, "sitemap.xml"), media_type="application/xml")
+    
+    # Cache headers for static assets (1 year for immutable assets)
+    CACHE_LONG = "public, max-age=31536000, immutable"
+    CACHE_SHORT = "public, max-age=86400"  # 1 day for mutable assets
+    
+    @app.get("/{filename:path}.js")
+    async def serve_js(filename: str):
+        response = FileResponse(os.path.join(DIST_DIR, f"{filename}.js"), media_type="application/javascript")
+        response.headers["Cache-Control"] = CACHE_LONG
+        return response
+    
     @app.get("/images/{path:path}")
     async def images(path: str):
-        return FileResponse(os.path.join(DIST_DIR, "images", path))
+        response = FileResponse(os.path.join(DIST_DIR, "images", path))
+        response.headers["Cache-Control"] = CACHE_LONG
+        return response
     
     @app.get("/files/{path:path}")
     async def files(path: str):
-        return FileResponse(os.path.join(DIST_DIR, "files", path))
+        response = FileResponse(os.path.join(DIST_DIR, "files", path))
+        response.headers["Cache-Control"] = CACHE_SHORT
+        return response
     
     @app.get("/videos/{path:path}")
     async def videos(path: str):
-        return FileResponse(os.path.join(DIST_DIR, "videos", path))
+        response = FileResponse(os.path.join(DIST_DIR, "videos", path))
+        response.headers["Cache-Control"] = CACHE_LONG
+        return response
     
     @app.get("/fonts/{path:path}")
     async def fonts(path: str):
-        return FileResponse(os.path.join(DIST_DIR, "fonts", path))
+        response = FileResponse(os.path.join(DIST_DIR, "fonts", path))
+        response.headers["Cache-Control"] = CACHE_LONG
+        return response
     
     # Catch-all for SPA routing - serve index.html for all other routes
     @app.get("/{path:path}")

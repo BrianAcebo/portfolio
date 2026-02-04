@@ -11,7 +11,7 @@ export default function WhosWatching() {
 	const navigate = useNavigate();
 
 	return (
-		<div className="bg-bg relative flex h-screen w-screen items-center justify-center">
+		<main className="bg-bg relative flex h-screen w-screen items-center justify-center">
 			<div className="absolute top-7 left-7 z-10 sm:top-10 sm:left-10">
 				<Logo />
 			</div>
@@ -37,7 +37,8 @@ export default function WhosWatching() {
 									width={160}
 									height={160}
 									className="mb-2 size-30 object-cover object-center sm:size-40"
-									loading="lazy"
+									loading="eager"
+									fetchPriority="high"
 									decoding="async"
 								/>
 								<span className="text-muted text-sm font-medium sm:text-base">{profile.name}</span>
@@ -51,6 +52,6 @@ export default function WhosWatching() {
 					Manage Profiles
 				</button>
 			</div>
-		</div>
+		</main>
 	);
 }

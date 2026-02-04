@@ -11,6 +11,9 @@ const __dirname = dirname(__filename);
 export default defineConfig({
 	base: '/',
 	plugins: [react(), tailwindcss()],
+	build: {
+		sourcemap: true // Generate source maps for debugging
+	},
 	optimizeDeps: {
 		exclude: ['lucide-react']
 	},

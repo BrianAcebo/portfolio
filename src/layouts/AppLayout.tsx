@@ -21,9 +21,9 @@ export default function AppLayout() {
 	// Single loading state until we know auth — avoids blip of WhosWatching for logged-in users
 	if (!authReady) {
 		return (
-			<div className="flex h-screen w-screen items-center justify-center bg-black">
-				<Loader2 className="size-6 animate-spin text-white" />
-			</div>
+			<main className="flex h-screen w-screen items-center justify-center bg-black">
+				<Loader2 className="size-6 animate-spin text-white" aria-label="Loading" />
+			</main>
 		);
 	}
 

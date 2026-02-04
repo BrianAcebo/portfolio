@@ -39,7 +39,12 @@ export function Lightbox({ open, onClose, children, ariaLabel = 'Lightbox' }: Li
 						<X className="h-5 w-5" />
 					</button>
 
-					<div className="bg-black text-white">{children}</div>
+					<div
+						className="max-h-[85vh] max-w-[70vw] overflow-hidden rounded-lg bg-black text-white"
+						onClick={(e) => e.stopPropagation()}
+					>
+						{children}
+					</div>
 				</motion.div>
 			)}
 		</AnimatePresence>

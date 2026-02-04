@@ -133,6 +133,14 @@ if os.path.exists(DIST_DIR):
     async def files(path: str):
         return FileResponse(os.path.join(DIST_DIR, "files", path))
     
+    @app.get("/videos/{path:path}")
+    async def videos(path: str):
+        return FileResponse(os.path.join(DIST_DIR, "videos", path))
+    
+    @app.get("/fonts/{path:path}")
+    async def fonts(path: str):
+        return FileResponse(os.path.join(DIST_DIR, "fonts", path))
+    
     # Catch-all for SPA routing - serve index.html for all other routes
     @app.get("/{path:path}")
     async def spa_catch_all(path: str):

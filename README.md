@@ -1,3 +1,6 @@
+<img width="983" height="512" alt="image" src="https://github.com/user-attachments/assets/0b2d8cac-46b1-4b7c-b4e0-248bbfc8ed94" />
+
+
 # Brian Acebo — Portfolio
 
 Hi, I'm **Brian**. This repo is my personal portfolio site: projects, blog, resume, and a bit about how I work. If you're reviewing this as part of a hiring process, the content below mirrors the [About](https://brianacebo.com/about) page and should give you a clear picture of who I am as an engineer.

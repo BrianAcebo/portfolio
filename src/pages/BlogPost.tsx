@@ -37,7 +37,7 @@ export default function BlogPost() {
 			<PageMeta title={post.title} description={post.excerpt} />
 			<article className="min-h-screen">
 				{/* Hero */}
-				<header className="relative flex h-[50vh] min-h-[320px] items-end justify-start overflow-hidden">
+				<header className="relative flex h-[50svh] min-h-[320px] items-end justify-start overflow-hidden">
 					<Image
 						src={post.image}
 						alt={post.title}
@@ -85,7 +85,7 @@ export default function BlogPost() {
 					</div>
 
 					{/* Body (markdown) */}
-					<div className="prose prose-invert prose-lg animate-fade-in-up animate-stagger-5 [&_a]:text-brand max-w-none opacity-0 [&_a]:no-underline hover:[&_a]:underline [&_code]:rounded [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sm [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-white [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-semibold [&_p]:leading-relaxed [&_p]:text-gray-300 [&_pre]:rounded-lg [&_pre]:bg-white/10 [&_pre]:p-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-gray-300">
+					<div className="prose prose-invert prose-lg animate-fade-in-up animate-stagger-5 [&_a]:text-brand max-w-none opacity-0 [&_a]:no-underline hover:[&_a]:underline [&_code]:rounded [&_code]:bg-white/10 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sm [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-white [&_h3]:mt-6 [&_h3]:text-xl [&_h3]:font-semibold [&_p]:leading-relaxed [&_p]:text-gray-300 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:bg-white/10 [&_pre]:p-4 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:text-gray-300">
 						<ReactMarkdown>{post.body}</ReactMarkdown>
 					</div>
 

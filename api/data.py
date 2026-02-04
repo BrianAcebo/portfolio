@@ -310,13 +310,13 @@ Cold calling is time-consuming and often feels robotic. Sales teams spend hours 
 
 ## Why we chose GPT-4 and DeepGram
 
-We needed an LLM that could handle open-ended conversation and a voice stack that could stream audio with low latency. **GPT-4** gave us the reasoning; **DeepGram** gave us fast, accurate speech-to-text and text-to-speech.
+We needed an LLM that could handle open-ended conversation and a voice stack that could stream audio with low latency. We originally chose **Groq** for its speed, but do to its low reasoning capabilities, it couldn't perform the function calling necessary for updates or booking meetings, etc. So we ended up with **GPT-4** that gave us the reasoning we needed. **DeepGram** gave us fast, accurate speech-to-text and **Cartesia** gave us fully customizable, realistic text-to-speech.
 
 ## Architecture overview
 
 1. **Inbound audio** → DeepGram STT → transcript
 2. **Transcript** → GPT-4 (with system prompt + conversation history) → next reply
-3. **Reply text** → DeepGram TTS → outbound audio
+3. **Reply text** → Cartesia TTS → outbound audio
 
 We run this in a loop with sub-second latency so the prospect never feels a long pause.
 
@@ -332,7 +332,7 @@ If you're exploring AI voice for sales or support, I'd start with a narrow use c
         "author_avatar": "",
         "published_at": "2025-01-15T14:00:00Z",
         "reading_time_minutes": 8,
-        "tags": ["AI", "Voice", "Sales", "GPT-4", "DeepGram"],
+        "tags": ["AI", "Voice", "Sales", "GPT-4", "DeepGram", "Cartesia"],
         "featured": True,
         "category_id": 1,
     },

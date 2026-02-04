@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useProfiles } from '../../hooks/useProfiles';
 import Logo from '../common/Logo';
 import { Loader2 } from 'lucide-react';
+import { STAGGER_DELAY_MS } from '../../constants';
 
 export default function WhosWatching() {
 	const { profiles, profilesLoading } = useProfiles();
@@ -20,10 +21,11 @@ export default function WhosWatching() {
 					{profilesLoading ? (
 						<Loader2 className="size-6 animate-spin" />
 					) : profiles.length > 0 ? (
-						profiles.map((profile) => (
+						profiles.map((profile, index) => (
 							<button
 								key={profile.id}
-								className="bg-white/10 p-3 transition-transform duration-300 ease-out hover:scale-105"
+								className="animate-fade-in-up bg-white/10 p-3 opacity-0 transition-transform duration-300 ease-out hover:scale-105"
+								style={{ animationDelay: `${index * STAGGER_DELAY_MS}ms` }}
 								onClick={() => {
 									signIn(profile);
 									navigate('/');

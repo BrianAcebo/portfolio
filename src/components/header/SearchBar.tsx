@@ -102,7 +102,7 @@ export default function SearchInput({ isMobile = false }: { isMobile?: boolean }
 			<input
 				id={isMobile ? 'mobile-header-search' : 'header-search'}
 				name={isMobile ? 'mobile-header-search' : 'header-search'}
-				className={`${cn('text-sm font-medium text-white transition-all duration-300 outline-none focus:outline-none', isOpen ? 'visible w-full' : 'invisible w-0')}`}
+				className={`${cn('text-base font-medium text-white transition-all duration-300 outline-none focus:outline-none', isOpen ? 'visible w-full' : 'invisible w-0')}`}
 				ref={inputRef}
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}

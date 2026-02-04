@@ -34,7 +34,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 			<div
 				className={cn(
 					'relative aspect-square w-full overflow-hidden rounded-lg bg-black shadow-xl transition-all duration-300 ease-out',
-					isHovered ? 'z-20 scale-110' : 'z-0 scale-100'
+					isHovered ? 'lg:z-20 lg:scale-110' : 'z-0 scale-100'
 				)}
 			>
 				{/* Poster image */}
@@ -81,7 +81,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
 				{/* Hover panel: controls + episode info + progress */}
 				<div
-					className={`absolute inset-x-0 bottom-0 bg-black/95 px-3 pt-6 pb-3 transition-all duration-300 ease-out ${
+					className={`absolute inset-x-0 bottom-0 hidden bg-black/95 px-3 pt-6 pb-3 transition-all duration-300 ease-out lg:block ${
 						isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
 					}`}
 				>

@@ -33,14 +33,14 @@ export function Lightbox({ open, onClose, children, ariaLabel = 'Lightbox' }: Li
 					<button
 						type="button"
 						onClick={onClose}
-						className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80"
+						className="absolute top-3 right-3 z-10 flex h-11 min-h-[44px] w-11 min-w-[44px] items-center justify-center rounded-full bg-black/60 text-white transition hover:bg-black/80 sm:top-4 sm:right-4 sm:h-10 sm:min-h-0 sm:w-10 sm:min-w-0"
 						aria-label="Close lightbox"
 					>
-						<X className="h-5 w-5" />
+						<X className="h-6 w-6 sm:h-5 sm:w-5" />
 					</button>
 
 					<div
-						className="max-h-[85vh] max-w-[70vw] overflow-hidden rounded-lg bg-black text-white"
+						className="mx-4 max-h-[85vh] w-[calc(100vw-2rem)] overflow-hidden rounded-lg bg-black text-white sm:mx-0"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{children}

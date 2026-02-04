@@ -43,7 +43,7 @@ export default function Search() {
 				{query && tags.length > 0 && (
 					<div className="mb-6 flex flex-col items-start gap-2 sm:flex-row">
 						<p className="text-gray-400">More to explore:</p>
-						<div className="flex flex-wrap items-center gap-3">
+						<div className="flex flex-wrap items-center gap-2 sm:gap-3">
 							{tags.map((tag, i) => (
 								<Fragment key={tag}>
 									<Link

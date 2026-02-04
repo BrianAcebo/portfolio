@@ -63,7 +63,7 @@
 		url('/fonts/helvetica-light-587ebe5a59211.woff') format('woff');
 }
 
-/* Helvetica Neue (OTF/TTF) – single family with weight/style; preload in index.html */
+/* Helvetica Neue (OTF/TTF) – single family with weight/style variations */
 @font-face {
 	font-family: 'Helvetica Neue';
 	src: url('/fonts/HelveticaNeueThin.otf') format('opentype');

@@ -7,11 +7,16 @@ import { useLocation } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { ProjectViewerModal } from '../components/projects/ProjectViewerModal';
 import { useProjects } from '../hooks/useProjects';
+import { useCallback } from 'react';
 
 export default function AppLayout() {
 	const { user, authReady } = useAuth();
 	const location = useLocation();
-	const { selectedProject, relatedProjects } = useProjects();
+	const { selectedProject, relatedProjects, setSelectedProject } = useProjects();
+
+	const handleCloseModal = useCallback(() => {
+		setSelectedProject(null);
+	}, [setSelectedProject]);
 
 	// Single loading state until we know auth — avoids blip of WhosWatching for logged-in users
 	if (!authReady) {
@@ -42,6 +47,7 @@ export default function AppLayout() {
 				open={!!selectedProject}
 				project={selectedProject}
 				relatedProjects={relatedProjects}
+				onClose={handleCloseModal}
 			/>
 		</>
 	);

@@ -39,9 +39,20 @@ export function VideoWithCustomControls({
 		if (video.paused) {
 			video.play();
 			setIsPlaying(true);
+			// Auto-hide controls after 2.5s when playing (mobile + desktop; hover resets on desktop)
+			if (hideControlsTimeoutRef.current) clearTimeout(hideControlsTimeoutRef.current);
+			hideControlsTimeoutRef.current = setTimeout(() => {
+				setShowControls(false);
+				hideControlsTimeoutRef.current = null;
+			}, 2500);
 		} else {
 			video.pause();
 			setIsPlaying(false);
+			if (hideControlsTimeoutRef.current) {
+				clearTimeout(hideControlsTimeoutRef.current);
+				hideControlsTimeoutRef.current = null;
+			}
+			setShowControls(true); // tap to pause: show controls (mobile)
 		}
 	};
 
@@ -186,11 +197,11 @@ export function VideoWithCustomControls({
 					className="opacity absolute inset-0 flex items-center justify-center bg-black/30 transition group-hover:opacity-100"
 					aria-label={isPlaying ? 'Pause' : 'Play'}
 				>
-					<span className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/30">
+					<span className="flex size-16 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/30 sm:size-20">
 						{isPlaying ? (
-							<Pause className="h-10 w-10 fill-current" />
+							<Pause className="size-8 fill-current sm:size-10" />
 						) : (
-							<Play className="h-10 w-10 fill-current pl-1" />
+							<Play className="size-8 fill-current pl-1 sm:size-10" />
 						)}
 					</span>
 				</button>
@@ -198,7 +209,7 @@ export function VideoWithCustomControls({
 
 			{/* Bottom control bar */}
 			<div
-				className={`absolute right-0 bottom-0 left-0 z-10 flex flex-col gap-2 bg-linear-to-t from-black/90 to-transparent px-4 pt-8 pb-3 transition-opacity ${
+				className={`absolute right-0 bottom-0 left-0 z-10 flex flex-col gap-2 bg-linear-to-t from-black/90 to-transparent px-3 py-3 transition-opacity sm:px-4 sm:pt-8 sm:pb-3 ${
 					showControls ? 'opacity-100' : 'opacity-0'
 				}`}
 				onClick={(e) => e.stopPropagation()}
@@ -232,27 +243,26 @@ export function VideoWithCustomControls({
 					/>
 				</div>
 
-				<div className="flex items-center justify-between gap-4">
-					<div className="flex items-center gap-3">
+				<div className="mt-1 flex items-center justify-between gap-2">
+					<div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
 						<button
 							type="button"
 							onClick={togglePlay}
-							className="text-white transition hover:text-white/80"
+							className="-m-2 touch-manipulation p-2 text-white transition hover:text-white/80"
 							aria-label={isPlaying ? 'Pause' : 'Play'}
 						>
 							{isPlaying ? (
-								<Pause className="h-5 w-5 fill-current" />
+								<Pause className="h-5 w-5 shrink-0 fill-current" />
 							) : (
-								<Play className="h-5 w-5 fill-current" />
+								<Play className="h-5 w-5 shrink-0 fill-current" />
 							)}
 						</button>
 
-						{/* Volume */}
-						<div className="flex items-center gap-1">
+						<div className="flex min-w-0 items-center gap-1 sm:gap-1">
 							<button
 								type="button"
 								onClick={toggleMute}
-								className="text-white transition hover:text-white/80"
+								className="-m-2 shrink-0 touch-manipulation p-2 text-white transition hover:text-white/80"
 								aria-label={isMuted ? 'Unmute' : 'Mute'}
 							>
 								{isMuted || volume === 0 ? (
@@ -261,7 +271,7 @@ export function VideoWithCustomControls({
 									<Volume2 className="h-5 w-5" />
 								)}
 							</button>
-							<div className="relative h-1 w-20 rounded-full bg-gray-600">
+							<div className="relative h-1 w-16 shrink-0 rounded-full bg-gray-600 sm:w-20">
 								<div
 									className="absolute inset-y-0 left-0 rounded-l-full bg-white"
 									style={{
@@ -283,7 +293,7 @@ export function VideoWithCustomControls({
 							</div>
 						</div>
 
-						<span className="text-sm text-white/90">
+						<span className="shrink-0 text-sm text-white/90">
 							{formatTime(currentTime)} / {formatTime(duration)}
 						</span>
 					</div>
@@ -291,7 +301,7 @@ export function VideoWithCustomControls({
 					<button
 						type="button"
 						onClick={toggleFullscreen}
-						className="text-white transition hover:text-white/80"
+						className="-m-2 shrink-0 touch-manipulation p-2 text-white transition hover:text-white/80"
 						aria-label="Fullscreen"
 					>
 						<Maximize className="h-5 w-5" />

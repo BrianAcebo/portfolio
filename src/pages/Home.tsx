@@ -17,13 +17,13 @@ export default function Home() {
 		<div>
 			{featuredProjectLoading ? (
 				<div
-					className="relative h-[90vh] w-full animate-pulse bg-gray-700"
+					className="relative h-[90svh] w-full animate-pulse bg-gray-700"
 					aria-busy="true"
 					aria-live="polite"
 				/>
 			) : featuredProject ? (
 				<>
-					<div className="relative flex h-[90vh] w-full items-center justify-center">
+					<div className="relative flex h-[90svh] w-full items-center justify-center">
 						<Image
 							src={featuredProject.image}
 							alt={featuredProject.title}
@@ -81,7 +81,7 @@ export default function Home() {
 					</div>
 				</>
 			) : (
-				<div className="relative h-[90vh] w-full bg-gray-900" aria-label="No featured project" />
+				<div className="relative h-[90svh] w-full bg-gray-900" aria-label="No featured project" />
 			)}
 
 			<div className="max-w-laptop relative z-50 mx-auto -mt-30 px-5 md:px-8 xl:px-12">

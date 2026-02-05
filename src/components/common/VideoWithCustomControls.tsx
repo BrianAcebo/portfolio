@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
+import { cn } from '../../utils/common';
 
 function formatTime(seconds: number): string {
 	if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
@@ -169,13 +170,13 @@ export function VideoWithCustomControls({
 
 	return (
 		<div
-			className="group relative bg-black"
+			className="group relative mx-auto max-w-3xl bg-black"
 			onMouseMove={handleMouseMove}
 			onMouseLeave={() => (isPlaying ? setShowControls(false) : null)}
 		>
 			<video
 				ref={videoRef}
-				className={className}
+				className={cn(className, 'w-full')}
 				src={src}
 				autoPlay={autoPlay}
 				playsInline={playsInline}
